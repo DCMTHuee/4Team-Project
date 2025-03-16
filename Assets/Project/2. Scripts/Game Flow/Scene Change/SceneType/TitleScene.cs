@@ -1,18 +1,24 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MoonYoHanStudy
 {
     public class TitleScene : SceneBase
     {
-        public override IEnumerator OnEnd()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override IEnumerator OnStart()
         {
-            throw new System.NotImplementedException();
+            var asyncLoadScene = SceneManager.LoadSceneAsync(SceneType.Title.ToString(), LoadSceneMode.Single);
+            yield return new WaitUntil(() => asyncLoadScene.isDone);
+
+            UIManager.Show<TitleUI>(UIList.TitleUI);
+        }
+
+        public override IEnumerator OnEnd()
+        {
+            UIManager.Hide<TitleUI>(UIList.TitleUI);
+
+            yield return null;
         }
     }
 }

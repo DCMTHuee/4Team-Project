@@ -1,19 +1,24 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace MoonYoHanStudy
 {
-    public class InGameScene : MonoBehaviour
+    public class InGameScene : SceneBase
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public override IEnumerator OnStart()
         {
-        
+            var asyncLoadScene = SceneManager.LoadSceneAsync(SceneType.InGame.ToString(), LoadSceneMode.Single);
+            yield return new WaitUntil(() => asyncLoadScene.isDone);
+
+            // UIManager.Show<TitleUI>(UIList.TitleUI);
         }
 
-        // Update is called once per frame
-        void Update()
+        public override IEnumerator OnEnd()
         {
-        
+            // UIManager.Hide<TitleUI>(UIList.TitleUI);
+
+            yield return null;
         }
     }
 }

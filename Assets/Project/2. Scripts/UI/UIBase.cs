@@ -9,7 +9,7 @@ namespace MoonYoHanStudy
             gameObject.SetActive(true);
         }
 
-        public virtual void Hide(System.Action onShowCallback = null)
+        public virtual void Hide(System.Action onHideCallback = null)
         {
             gameObject.SetActive(false);
         }

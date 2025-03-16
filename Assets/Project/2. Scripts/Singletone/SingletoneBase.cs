@@ -1,16 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
-using System.Linq;
 
 namespace MoonYoHanStudy
 {
 
-    public class SingletoneBase<T> : MonoBehaviour where T : class
+    public class SingletoneBase<T> : MonoBehaviour where T : MonoBehaviour
     {
-        [Obsolete]
         public static T Singletone
         {
             get
@@ -19,10 +14,10 @@ namespace MoonYoHanStudy
             }
         }
 
-        [Obsolete]
         private static readonly Lazy<T> _Instance = new Lazy<T>(() =>
         {
-            T instance = FindObjectOfType(typeof(T)) as T;
+            T instance = FindAnyObjectByType<T>();
+
 
             if (instance == null)
             {
