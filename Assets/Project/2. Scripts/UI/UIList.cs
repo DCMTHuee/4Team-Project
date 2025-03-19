@@ -6,11 +6,13 @@ namespace MoonYoHanStudy
     {
         POPUP_START,
 
-
+        InGameUI,
 
         POPUP_END,
         PANEL_START,
 
+        CreaftingUI,
+        
         LoadingUI,
         TitleUI,
 
