@@ -41,7 +41,7 @@ namespace MoonYoHanStudy
         private Dictionary<UIList, UIBase> panels = new Dictionary<UIList, UIBase>();
 
 
-        private const string UI_PREFAB_PATH = "UI/Prefab/";
+        private const string UI_PREFAB_PATH = "Prefab/UI/";
 
         public void Initialized()
         {

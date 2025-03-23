@@ -11,12 +11,12 @@ namespace MoonYoHanStudy
             var asyncLoadScene = SceneManager.LoadSceneAsync(SceneType.InGame.ToString(), LoadSceneMode.Single);
             yield return new WaitUntil(() => asyncLoadScene.isDone);
 
-            // UIManager.Show<TitleUI>(UIList.TitleUI);
+            UIManager.Show<InGameUI>(UIList.InGameUI);
         }
 
         public override IEnumerator OnEnd()
         {
-            // UIManager.Hide<TitleUI>(UIList.TitleUI);
+            UIManager.Hide<InGameUI>(UIList.TitleUI);
 
             yield return null;
         }
