@@ -5,6 +5,8 @@ namespace MoonYoHanStudy
 {
     public class Player_Move : MonoBehaviour
     {
+        [SerializeField] GameObject mainCameraObject;
+
         [SerializeField] float moveSpeed = 5f;
         [SerializeField] float rotationSpeed = 10;
 
@@ -48,9 +50,39 @@ namespace MoonYoHanStudy
         void OnMouse(InputValue value)
         {
             Vector2 direction = value.Get<Vector2>();
+            Vector2 mouseInput = direction * rotationSpeed * Time.deltaTime;
 
-            float rotationY = direction.x * rotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.up  * rotationY);
+            float currentPitch = mainCameraObject.transform.eulerAngles.x;
+
+            transform.Rotate(Vector3.up * mouseInput.x);
+
+            // 마우스를 내릴 수 있는 한계점 인지
+            bool isUpMax = false;
+            bool isDownMax = false;
+
+            if(30 < currentPitch && currentPitch <= 180)
+            {
+                isDownMax = true;
+            }
+            else if (180 <= currentPitch && currentPitch < 330)
+            {
+                isUpMax = true;
+            }
+
+            // 마우스의 움직임이 없다면 움직일 수 있게
+            if (mouseInput.y > 0)
+            {
+                isDownMax = false;
+            }
+            else if (mouseInput.y < 0)
+            {
+                isUpMax = false;
+            }
+
+            if (!isUpMax && !isDownMax)
+            {
+                mainCameraObject.transform.Rotate(Vector3.right * -mouseInput.y);
+            }
         }
     }
 }
