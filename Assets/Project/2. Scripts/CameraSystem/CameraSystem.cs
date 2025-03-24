@@ -13,8 +13,8 @@ namespace MoonYoHanStudy
 
         [SerializeField] private LayerMask aimingLayerMask;
         private CinemachineThirdPersonFollow tpsCameraFollow;
-        private bool isRightSide = true;
-        private float targetCameraSide = 1f;
+        //private bool isRightSide = true;
+        //private float targetCameraSide = 1f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

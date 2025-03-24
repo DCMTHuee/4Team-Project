@@ -12,6 +12,7 @@ namespace MoonYoHanStudy
             yield return new WaitUntil(() => asyncLoadScene.isDone);
 
             UIManager.Show<InGameUI>(UIList.InGameUI);
+            UIManager.Show<CreaftingUI>(UIList.CreaftingUI);
         }
 
         public override IEnumerator OnEnd()

@@ -11,6 +11,8 @@ namespace MoonYoHanStudy
         POPUP_END,
         PANEL_START,
 
+
+
         LoadingUI,
         TitleUI,
         InGameUI,

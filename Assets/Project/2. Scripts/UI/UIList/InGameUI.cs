@@ -7,7 +7,8 @@ namespace MoonYoHanStudy
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-        
+
+
         }
 
         // Update is called once per frame
@@ -23,16 +24,7 @@ namespace MoonYoHanStudy
             HideUI = !HideUI;
             Debug.Log(HideUI);
 
-            // UIManager.Show<CreaftingUI>(UIList.CreaftingUI);
 
-            if (HideUI)
-            {
-                UIManager.Show<InGameUI>(UIList.InGameUI);
-            }
-            else
-            {
-                UIManager.Hide<InGameUI>(UIList.InGameUI);
-            }
         }
     }
 }

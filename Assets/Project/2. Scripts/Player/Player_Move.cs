@@ -72,7 +72,7 @@ namespace MoonYoHanStudy
         private float CameraTargetYaw;
         private float CameraTargetPitch;
 
-        private float rotationSmoothSpeed = 10;
+        // private float rotationSmoothSpeed = 10;
 
         void OnMouse(InputValue value)
         {

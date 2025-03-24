@@ -851,8 +851,8 @@ MonoBehaviour:
   RemoveblockLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  selectBlock: 1
-  canPlacerBlock: 1
+  selectBlock: 0
+  canPlacerBlock: 0
   ApaCube: {fileID: 0}
   isForceCursorVisible: 0
 --- !u!1 &1267507412
