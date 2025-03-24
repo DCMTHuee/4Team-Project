@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,6 +29,11 @@ namespace MoonYoHanStudy
                 adjustMovement = ((transform.forward * direction.y) + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
                 characterController.Move(adjustMovement);
             }
+
+            if (notPuchAltButton)
+            {
+                // Rotate(CameraSystem.Singletone.AimingPoint);
+            }
         }
 
         Vector2 direction;
@@ -47,42 +53,53 @@ namespace MoonYoHanStudy
             }
         }
 
+        bool notPuchAltButton = true;
+
+        public void Rotate(Vector3 targetAimPoint)
+        {
+            Vector3 aimTarget = targetAimPoint;
+            aimTarget.y = transform.position.y;
+            Vector3 pos = transform.position;
+
+            Vector3 aimDirection = (aimTarget - pos).normalized;
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 10f);
+        }
+
+        private float CameraBottomClamp = -45f;
+        private float CameraTopClamp = 80f;
+        private float CameraSensitivityX = 1f;
+        private float CameraSensitivityY = 1f;
+        private float CameraTargetYaw;
+        private float CameraTargetPitch;
+
+        private float rotationSmoothSpeed = 10;
+
         void OnMouse(InputValue value)
         {
             Vector2 direction = value.Get<Vector2>();
-            Vector2 mouseInput = direction * rotationSpeed * Time.deltaTime;
 
-            float currentPitch = mainCameraObject.transform.eulerAngles.x;
+            float yaw = direction.x * rotationSpeed * CameraSensitivityX;
+            float pitch = direction.y * rotationSpeed * CameraSensitivityY;
 
-            transform.Rotate(Vector3.up * mouseInput.x);
+            CameraTargetYaw += yaw * Time.deltaTime;
+            CameraTargetPitch -= pitch * Time.deltaTime;
 
-            // 마우스를 내릴 수 있는 한계점 인지
-            bool isUpMax = false;
-            bool isDownMax = false;
+            CameraTargetYaw = ClampAngle(CameraTargetYaw, -360, 360);
+            CameraTargetPitch = ClampAngle(CameraTargetPitch, CameraBottomClamp, CameraTopClamp);
 
-            if(30 < currentPitch && currentPitch <= 180)
-            {
-                isDownMax = true;
-            }
-            else if (180 <= currentPitch && currentPitch < 330)
-            {
-                isUpMax = true;
-            }
+            transform.rotation = Quaternion.Euler(0, CameraTargetYaw, 0f);
+            mainCameraObject.transform.rotation = Quaternion.Euler(CameraTargetPitch, CameraTargetYaw, 0f);
 
-            // 마우스의 움직임이 없다면 움직일 수 있게
-            if (mouseInput.y > 0)
-            {
-                isDownMax = false;
-            }
-            else if (mouseInput.y < 0)
-            {
-                isUpMax = false;
-            }
 
-            if (!isUpMax && !isDownMax)
-            {
-                mainCameraObject.transform.Rotate(Vector3.right * -mouseInput.y);
-            }
+
+/*            Quaternion targetRotation = Quaternion.Euler(CameraTargetPitch, CameraTargetYaw, 0f);
+            mainCameraObject.transform.rotation = Quaternion.Slerp(mainCameraObject.transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);*/
+        }
+
+        public float ClampAngle(float angle, float min, float max)
+        {
+            angle = Mathf.Repeat(angle + 180f, 360f) - 180f; // -180 ~ 180도로 정규화
+            return Mathf.Clamp(angle, min, max);
         }
     }
 }
