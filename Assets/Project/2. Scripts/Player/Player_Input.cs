@@ -2,21 +2,16 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class InGameUI : UIBase
+    public class Player_Input : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [HideInInspector] public static Player_Input player_Input = null;
 
         bool CreaftingUIButton = false;
+
+        private void Awake()
+        {
+            player_Input = this;
+        }
 
         void OnCreafting()
         {
@@ -31,6 +26,8 @@ namespace MoonYoHanStudy
             {
                 UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
             }
+
+            // CreaftingUIButton = CreaftingUIButton ? UIManager.Show<CreaftingUI>(UIList.CreaftingUI) : UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
         }
     }
 }
