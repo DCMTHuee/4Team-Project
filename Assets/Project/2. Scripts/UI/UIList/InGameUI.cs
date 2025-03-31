@@ -8,6 +8,7 @@ namespace MoonYoHanStudy
         void Start()
         {
 
+
         }
 
         // Update is called once per frame
@@ -16,21 +17,14 @@ namespace MoonYoHanStudy
         
         }
 
-        bool CreaftingUIButton = false;
+        bool HideUI = true;
 
         void OnCreafting()
         {
-            Debug.Log("클릭 체크");
-            CreaftingUIButton = !CreaftingUIButton;
+            HideUI = !HideUI;
+            Debug.Log(HideUI);
 
-            if (CreaftingUIButton)
-            {
-                UIManager.Show<CreaftingUI>(UIList.CreaftingUI);
-            }
-            else
-            {
-                UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
-            }
+
         }
     }
 }
