@@ -41,7 +41,7 @@ namespace MoonYoHanStudy
         private Dictionary<UIList, UIBase> panels = new Dictionary<UIList, UIBase>();
 
 
-        private const string UI_PREFAB_PATH = "UI/Prefab/";
+        private const string UI_PREFAB_PATH = "Prefab/UI/";
 
         public void Initialized()
         {
@@ -64,14 +64,16 @@ namespace MoonYoHanStudy
             for (int index = (int)UIList.POPUP_START + 1; index < (int)UIList.POPUP_END; index++)
             {
                 popups.Add((UIList)index, null);
+                Debug.Log($"ÆË¾÷Ã¢ÀÇ {index}¹øÂ° ÀÎµ¦½º °ª : {popups[(UIList)index]}");
             }
 
             for (int index = (int)UIList.PANEL_START + 1; index < (int)UIList.PANEL_END; index++)
             {
                 panels.Add((UIList)index, null);
+                Debug.Log($"ÆÇ³ÚÃ¢ÀÇ {index}¹øÂ° ÀÎµ¦½º °ª : {panels[(UIList)index]}");
             }
         }
-
+        
         public bool GetUI<T>(UIList uiPrefabName, out T ui, bool reload = false) where T : UIBase
         {
             ui = GetUI<T>(uiPrefabName, reload);
@@ -81,10 +83,10 @@ namespace MoonYoHanStudy
         public T GetUI<T>(UIList uiPrefabName, bool reload = false) where T : UIBase
         {
             Dictionary<UIList, UIBase> container =
-                uiPrefabName > UIList.POPUP_START && uiPrefabName < UIList.POPUP_END ? popups : panels;
+                UIList.POPUP_START < uiPrefabName && uiPrefabName < UIList.POPUP_END ? popups : panels;
 
             Transform root =
-                uiPrefabName > UIList.POPUP_START && uiPrefabName < UIList.POPUP_END ? popupRoot : panelRoot;
+                UIList.POPUP_START < uiPrefabName && uiPrefabName < UIList.POPUP_END ? popupRoot : panelRoot;
 
             if (!container.ContainsKey(uiPrefabName))
             {
