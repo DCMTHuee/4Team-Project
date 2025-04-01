@@ -6,5 +6,10 @@ namespace MoonYoHanStudy
     {
         internal float MaxHP;
         internal float MaxST;
+
+        private void Start()
+        {
+
+        }
     }
 }

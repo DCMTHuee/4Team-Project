@@ -22,16 +22,25 @@ namespace MoonYoHanStudy
         [SerializeField] float curHP;
         [SerializeField] float curST;
 
+        private Vector3 playerPosition;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             MonsterInit(MONSTER_TYPE);
+            playerPosition = GameManager.instance.player.transform.position;
+            
         }
 
         // Update is called once per frame
         void Update()
         {
-            
+            MonsterUpdate();
+        }
+
+        void MonsterUpdate()
+        {
+
         }
 
         void MonsterInit(MonsterType monsterType)
