@@ -7,20 +7,23 @@ namespace MoonYoHanStudy
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager instance;
+        public static GameManager Instance;
 
-        [HideInInspector] public Player_Move player;
+        [HideInInspector] public Player_Move Player;
+        [HideInInspector] public Lightbringer_Stone Lightbringer_Stone;
+
         public List<Enemy_Base> enemys = new List<Enemy_Base>();
 
         private void Awake()
         {
-            instance = this;
+            Instance = this;
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            player = FindAnyObjectByType<Player_Move>();
+            Player = FindAnyObjectByType<Player_Move>();
+            Lightbringer_Stone = FindAnyObjectByType<Lightbringer_Stone>();
         }
 
         // Update is called once per frame
