@@ -15,6 +15,8 @@ namespace MoonYoHanStudy
     public enum MonsterState
     {
         idle,
+        move,
+        attack,
     }
 
     public class Enemy_Test1 : Enemy_Base
@@ -99,11 +101,59 @@ namespace MoonYoHanStudy
 
         void MonsterUpdate()
         {
-            m_TargetName = playerPosition.gameObject.name;
-            m_TargetPos = playerPosition.position;
+            switch(MONSTER_STATE)
+            {
+                case MonsterState.idle:
+                    if (true)
+                    {
+                        
+                    }
+                    else if (false)
+                    {
+                        MONSTER_STATE = MonsterState.move;
+                    }
+                    break;
+
+                case MonsterState.move:
+                    if (true)
+                    {
+                        MONSTER_STATE = MonsterState.idle;
+                    }
+                    else if (false)
+                    {
+                        MONSTER_STATE = MonsterState.attack;
+                    }
+                    break;
+
+                case MonsterState.attack:
+                    if (true)
+                    {
+                        MONSTER_STATE = MonsterState.move;
+                    }
+                    else if (false)
+                    {
+
+                    }
+                    break;
+            }
         }// void MonsterUpdate()
 
         
+        void MonsterIdle()
+        {
+
+        }
+
+        void MonsterMove()
+        {
+
+        }
+
+        public override void MonsterAttack()
+        {
+
+        }
+
         IEnumerator TargetUpdate()
         {
             bool startTargetCheck = false;
@@ -132,5 +182,10 @@ namespace MoonYoHanStudy
 
             goto I;
         }// IEnumerator TargetUpdate()
+
+        public override void EnemyHit()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

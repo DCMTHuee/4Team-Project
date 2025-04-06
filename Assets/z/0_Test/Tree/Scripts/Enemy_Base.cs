@@ -2,14 +2,12 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class Enemy_Base : MonoBehaviour
+    public abstract class Enemy_Base : MonoBehaviour
     {
         internal float MaxHP;
         internal float MaxST;
 
-        private void Start()
-        {
-
-        }
+        public abstract void MonsterAttack();
+        public abstract void EnemyHit();
     }
 }
