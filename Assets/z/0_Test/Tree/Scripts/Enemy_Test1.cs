@@ -19,10 +19,19 @@ namespace MoonYoHanStudy
         attack,
     }
 
+    public enum TargetObject
+    {
+        Lightbringer_Stone,
+        Player,
+        Trap_Object,
+        Normal_Object,
+    }
+
     public class Enemy_Test1 : Enemy_Base
     {
         public MonsterState MONSTER_STATE; // 몬스터의 행동 상태
         public MonsterType MONSTER_TYPE; // 몬스터의 종족(타입)
+        public TargetObject TARGET_OBJECT;
 
         [SerializeField] float curHP;
         [SerializeField] float curST;
@@ -46,6 +55,7 @@ namespace MoonYoHanStudy
             lightbringer_Stone = GameManager.Instance.Lightbringer_Stone.transform;
 
             MonsterInit(MONSTER_TYPE);
+            StartCoroutine(TargetUpdate());
         } // void Start()
 
         void MonsterInit(MonsterType monsterType)
@@ -60,6 +70,7 @@ namespace MoonYoHanStudy
                     MaxST = 100;
                     curST = MaxST;
 
+                    TARGET_OBJECT = TargetObject.Lightbringer_Stone;
                     m_TargetName = lightbringer_Stone.gameObject.name;
                     m_TargetPos = lightbringer_Stone.position;
 
@@ -73,6 +84,7 @@ namespace MoonYoHanStudy
                     MaxST = 300;
                     curST = MaxST;
 
+                    TARGET_OBJECT = TargetObject.Lightbringer_Stone;
                     m_TargetName = lightbringer_Stone.gameObject.name;
                     m_TargetPos = lightbringer_Stone.position;
 
@@ -86,6 +98,7 @@ namespace MoonYoHanStudy
                     MaxST = 10000;
                     curST = MaxST;
 
+                    TARGET_OBJECT = TargetObject.Player;
                     m_TargetName = playerPosition.gameObject.name;
                     m_TargetPos = playerPosition.position;
 
@@ -96,7 +109,10 @@ namespace MoonYoHanStudy
         // Update is called once per frame
         void Update()
         {
-            MonsterUpdate();
+            if (m_TargetName == null)
+            {
+                MonsterUpdate();
+            }
         }// void Update()
 
         void MonsterUpdate()
@@ -104,35 +120,39 @@ namespace MoonYoHanStudy
             switch(MONSTER_STATE)
             {
                 case MonsterState.idle:
-                    if (true)
+                    if (Vector3.Distance(m_TargetPos, transform.position) > 30)
                     {
-                        
+                        // 아이들 행동
                     }
-                    else if (false)
+                    else if (Vector3.Distance(m_TargetPos, transform.position) < 20)
                     {
                         MONSTER_STATE = MonsterState.move;
                     }
                     break;
 
                 case MonsterState.move:
-                    if (true)
+
+                    // 무브 행동
+                    MonsterMove();
+
+                    if (Vector3.Distance(m_TargetPos, transform.position) > 20)
                     {
                         MONSTER_STATE = MonsterState.idle;
                     }
-                    else if (false)
+                    else if (Vector3.Distance(m_TargetPos, transform.position) < 1)
                     {
                         MONSTER_STATE = MonsterState.attack;
                     }
                     break;
 
                 case MonsterState.attack:
-                    if (true)
+                    if (Vector3.Distance(m_TargetPos, transform.position) > 1)
                     {
                         MONSTER_STATE = MonsterState.move;
                     }
-                    else if (false)
+                    else if (true)
                     {
-
+                        // 어택 행동
                     }
                     break;
             }
@@ -146,7 +166,25 @@ namespace MoonYoHanStudy
 
         void MonsterMove()
         {
+            transform.position -= MovePoint(TARGET_OBJECT) * Time.deltaTime;
+        }
 
+        Vector3 MovePoint(TargetObject TARGET_OBJECT)
+        {
+            Vector3 vector3 = Vector3.zero;
+
+            switch (TARGET_OBJECT)
+            {
+                case TargetObject.Lightbringer_Stone:
+                    vector3 = (transform.position - playerPosition.position).normalized;
+                    break;
+
+                case TargetObject.Player:
+                    vector3 = (transform.position - playerPosition.position).normalized;
+                    break;
+            }
+
+            return vector3;
         }
 
         public override void MonsterAttack()
@@ -156,31 +194,22 @@ namespace MoonYoHanStudy
 
         IEnumerator TargetUpdate()
         {
-            bool startTargetCheck = false;
-            float waitForSeconds = 15;
-            float IwaitForSeconds = 5;
+            yield return new WaitForSeconds(15);
 
-            if (startTargetCheck)
-            {
-                startTargetCheck = true;
-                yield return new WaitForSeconds(waitForSeconds);
-            }
+        TU:
 
-        I:
             if (Vector3.Distance(transform.position, playerPosition.position) < Vector3.Distance(transform.position, lightbringer_Stone.position))
             {
-                m_TargetName = playerPosition.gameObject.name;
-                m_TargetPos = playerPosition.position;
+                TARGET_OBJECT = TargetObject.Player;
             }
             else
             {
-                m_TargetName = lightbringer_Stone.gameObject.name;
-                m_TargetPos = lightbringer_Stone.position;
+                TARGET_OBJECT = TargetObject.Lightbringer_Stone;
             }
 
-            yield return new WaitForSeconds(IwaitForSeconds);
+            yield return new WaitForSeconds(5);
 
-            goto I;
+            goto TU;
         }// IEnumerator TargetUpdate()
 
         public override void EnemyHit()
