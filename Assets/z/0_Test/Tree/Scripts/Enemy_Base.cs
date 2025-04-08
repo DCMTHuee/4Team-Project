@@ -7,7 +7,6 @@ namespace MoonYoHanStudy
         internal float MaxHP;
         internal float MaxST;
 
-        public abstract void MonsterAttack();
-        public abstract void EnemyHit();
+        public abstract void TakeDamage(float Damage);
     }
 }

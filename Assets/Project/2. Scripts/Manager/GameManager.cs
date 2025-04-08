@@ -9,7 +9,7 @@ namespace MoonYoHanStudy
     {
         public static GameManager Instance;
 
-        [HideInInspector] public Player_Move Player;
+        [HideInInspector] public PlayerController Player;
         [HideInInspector] public Lightbringer_Stone Lightbringer_Stone;
 
         public List<Enemy_Base> enemys = new List<Enemy_Base>();
@@ -22,7 +22,7 @@ namespace MoonYoHanStudy
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            Player = FindAnyObjectByType<Player_Move>();
+            Player = FindAnyObjectByType<PlayerController>();
             Lightbringer_Stone = FindAnyObjectByType<Lightbringer_Stone>();
         }
 

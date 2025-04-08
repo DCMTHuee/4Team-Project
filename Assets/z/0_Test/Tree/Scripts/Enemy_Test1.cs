@@ -5,33 +5,15 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public enum MonsterType
+    public class Enemy_Test1 : ObjectStatusBase
     {
-        None,
-        Tree,
-        Boss,
-    }
+        [SerializeField] private EnemyData enemyData;
 
-    public enum MonsterState
-    {
-        idle,
-        move,
-        attack,
-    }
-
-    public enum TargetObject
-    {
-        Lightbringer_Stone,
-        Player,
-        Trap_Object,
-        Normal_Object,
-    }
-
-    public class Enemy_Test1 : Enemy_Base
-    {
         public MonsterState MONSTER_STATE; // 몬스터의 행동 상태
         public MonsterType MONSTER_TYPE; // 몬스터의 종족(타입)
         public TargetObject TARGET_OBJECT;
+
+        public StatusEffect statusEffect = StatusEffect.None;
 
         [SerializeField] float curHP;
         [SerializeField] float curST;
@@ -39,7 +21,7 @@ namespace MoonYoHanStudy
         private Transform playerPosition;
         private Transform lightbringer_Stone;
 
-        public Dictionary<string, float> cumulative_Damage = new Dictionary<string, float>();
+        public Dictionary<string, float> cumulative_Damage = new Dictionary<string, float>(); // 누적 데미지량
 
         [Header("Target")]
         public string m_TargetName;
@@ -60,136 +42,94 @@ namespace MoonYoHanStudy
 
         void MonsterInit(MonsterType monsterType)
         {
-            switch(monsterType)
+            var data = enemyData.GetData(monsterType);
+
+            MaxHP = data.MaxHP;
+            curHP = MaxHP;
+            MaxST = data.MaxST;
+            curST = MaxST;
+
+            switch (monsterType)
             {
                 case MonsterType.None:
-
-                    MaxHP = 1000;
-                    curHP = MaxHP;
-
-                    MaxST = 100;
-                    curST = MaxST;
-
                     TARGET_OBJECT = TargetObject.Lightbringer_Stone;
-                    m_TargetName = lightbringer_Stone.gameObject.name;
                     m_TargetPos = lightbringer_Stone.position;
 
                     break;
 
                 case MonsterType.Tree:
-
-                    MaxHP = 2000;
-                    curHP = MaxHP;
-
-                    MaxST = 300;
-                    curST = MaxST;
-
                     TARGET_OBJECT = TargetObject.Lightbringer_Stone;
-                    m_TargetName = lightbringer_Stone.gameObject.name;
                     m_TargetPos = lightbringer_Stone.position;
 
                     break;
 
                 case MonsterType.Boss:
-
-                    MaxHP = 10000;
-                    curHP = MaxHP;
-
-                    MaxST = 10000;
-                    curST = MaxST;
-
                     TARGET_OBJECT = TargetObject.Player;
-                    m_TargetName = playerPosition.gameObject.name;
                     m_TargetPos = playerPosition.position;
 
                     break;
             }
+
+            TransitionToState(new IdleState(this));
+
         }// void MonsterInit(MonsterType monsterType)
 
         // Update is called once per frame
         void Update()
         {
-            if (m_TargetName == null)
+            if (m_TargetName != null)
             {
-                MonsterUpdate();
+                currentState?.Update();
             }
         }// void Update()
 
-        void MonsterUpdate()
+        void CCUpdate()
         {
-            switch(MONSTER_STATE)
+            if ((statusEffect & StatusEffect.Stunned) != 0)
             {
-                case MonsterState.idle:
-                    if (Vector3.Distance(m_TargetPos, transform.position) > 30)
-                    {
-                        // 아이들 행동
-                    }
-                    else if (Vector3.Distance(m_TargetPos, transform.position) < 20)
-                    {
-                        MONSTER_STATE = MonsterState.move;
-                    }
-                    break;
-
-                case MonsterState.move:
-
-                    // 무브 행동
-                    MonsterMove();
-
-                    if (Vector3.Distance(m_TargetPos, transform.position) > 20)
-                    {
-                        MONSTER_STATE = MonsterState.idle;
-                    }
-                    else if (Vector3.Distance(m_TargetPos, transform.position) < 1)
-                    {
-                        MONSTER_STATE = MonsterState.attack;
-                    }
-                    break;
-
-                case MonsterState.attack:
-                    if (Vector3.Distance(m_TargetPos, transform.position) > 1)
-                    {
-                        MONSTER_STATE = MonsterState.move;
-                    }
-                    else if (true)
-                    {
-                        // 어택 행동
-                    }
-                    break;
+                // 기절 상태 - 아무 행동 불가
+                return;
             }
-        }// void MonsterUpdate()
 
-        
-        void MonsterIdle()
-        {
-
+            if ((statusEffect & StatusEffect.Slowed) != 0)
+            {
+                // 기절 상태 - 아무 행동 불가
+                return;
+            }
         }
 
-        void MonsterMove()
+        public void MonsterMove()
         {
             transform.position -= MovePoint(TARGET_OBJECT) * Time.deltaTime;
         }
 
-        Vector3 MovePoint(TargetObject TARGET_OBJECT)
+        public Vector3 MovePoint(TargetObject targetObject)
         {
             Vector3 vector3 = Vector3.zero;
 
-            switch (TARGET_OBJECT)
+            switch(targetObject)
             {
                 case TargetObject.Lightbringer_Stone:
-                    vector3 = (transform.position - playerPosition.position).normalized;
+                    m_TargetPos = lightbringer_Stone.position;
                     break;
 
                 case TargetObject.Player:
-                    vector3 = (transform.position - playerPosition.position).normalized;
+                    m_TargetPos = playerPosition.position;
                     break;
             }
+
+            vector3 = (transform.position - m_TargetPos).normalized;
 
             return vector3;
         }
 
-        public override void MonsterAttack()
-        {
+        private Enemy_StateBase currentState;
 
+        public void TransitionToState(Enemy_StateBase newState)
+        {
+            currentState?.Exit();
+            currentState = newState;
+            currentState?.Enter();
         }
 
         IEnumerator TargetUpdate()
@@ -198,12 +138,17 @@ namespace MoonYoHanStudy
 
         TU:
 
+            Debug.Log("TargetUpdate");
+
             if (Vector3.Distance(transform.position, playerPosition.position) < Vector3.Distance(transform.position, lightbringer_Stone.position))
             {
+                Debug.Log("Player");
                 TARGET_OBJECT = TargetObject.Player;
+
             }
             else
             {
+                Debug.Log("Lightbringer_Stone");
                 TARGET_OBJECT = TargetObject.Lightbringer_Stone;
             }
 
@@ -212,9 +157,9 @@ namespace MoonYoHanStudy
             goto TU;
         }// IEnumerator TargetUpdate()
 
-        public override void EnemyHit()
+        public override void TakeDamage(float Damage)
         {
-            throw new System.NotImplementedException();
+            curHP -= Damage;
         }
     }
 }

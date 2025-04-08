@@ -24,11 +24,7 @@ namespace MoonYoHanStudy
         // Update is called once per frame
         void Update()
         {
-            if (canMove)
-            {
-                adjustMovement = ((transform.forward * direction.y) + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
-                characterController.Move(adjustMovement);
-            }
+
 
             if (notPuchAltButton)
             {
