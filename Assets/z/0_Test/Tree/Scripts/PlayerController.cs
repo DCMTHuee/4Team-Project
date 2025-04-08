@@ -51,10 +51,11 @@ namespace MoonYoHanStudy
 
         public override void TakeDamage(float amount)
         {
-            throw new System.NotImplementedException();
+            currentHP -= amount;
+            currentST -= amount;
         }
 
-        #region 인풋값 컨트롤
+        #region 인풋값 컨트롤 // 나중에 수정 요망
 
         void Move()
         {
@@ -128,6 +129,6 @@ namespace MoonYoHanStudy
             return Mathf.Clamp(angle, min, max);
         }
 
-        #endregion
+        #endregion 
     }
 }
