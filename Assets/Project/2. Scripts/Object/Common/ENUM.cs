@@ -34,6 +34,7 @@ namespace MoonYoHanStudy
         Airborne = 1 << 2,  // 4
         Burning = 1 << 3,  // 8
         Frozen = 1 << 4,  // 16
+        Bleed = 1 << 5, // 32
                           // ...추가 가능
     }
 

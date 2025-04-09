@@ -17,13 +17,15 @@ namespace MoonYoHanStudy
         private void Awake()
         {
             Instance = this;
+
+            Player = FindAnyObjectByType<PlayerController>();
+            Lightbringer_Stone = FindAnyObjectByType<Lightbringer_Stone>();
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            Player = FindAnyObjectByType<PlayerController>();
-            Lightbringer_Stone = FindAnyObjectByType<Lightbringer_Stone>();
+
         }
 
         // Update is called once per frame
