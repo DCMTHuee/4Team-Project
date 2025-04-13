@@ -9,7 +9,7 @@ namespace MoonYoHanStudy
         [SerializeField] private EnemyData enemyData; // 몬스터 데이터
 
         private Enemy_StateBase currentState; // 현재 행동 상태
-        private StatusEffect statusEffect = StatusEffect.None; // 상태이상의 상태
+        public StatusEffect statusEffect = StatusEffect.None; // 상태이상의 상태
 
 
         [SerializeField] float currentHP; // 현재 체력
@@ -43,7 +43,6 @@ namespace MoonYoHanStudy
             var data = enemyData.GetData(monsterType);
 
             MaxHP = data.MaxHP;
-            Debug.Log(MaxHP);
             currentHP = MaxHP;
 
             MaxST = data.MaxST;
@@ -67,9 +66,12 @@ namespace MoonYoHanStudy
         // Update is called once per frame
         protected override void Update()
         {
-            base.Update();
-        }
+            if (canMove)
+            {
+                base.Update();
+            }
 
+        }
 
     }
 }

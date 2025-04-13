@@ -21,7 +21,6 @@ namespace MoonYoHanStudy
 
         void Update()
         {
-            SetCursorVisible(isForceCursorVisible);
 
             // B키를 눌러면 설치 가능 모드, 불가능 모드 전환
             if (Input.GetKeyDown(KeyCode.B))
@@ -113,14 +112,6 @@ namespace MoonYoHanStudy
                 Mathf.Round(position.y),
                 Mathf.Round(position.z)
             );
-        }
-
-        public bool isForceCursorVisible = false;
-
-        public void SetCursorVisible(bool isVisible)
-        {
-            Cursor.visible = isVisible || isForceCursorVisible;
-            Cursor.lockState = isVisible || isForceCursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
         }
     }
 }

@@ -560,7 +560,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: dd9ceb35120513246bce08f2658d7a9e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -838,8 +838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f21153a8dd5e41448353763110c1dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockPrefab: {fileID: 5548018230906010625, guid: 3c070b108a06b904db2bd41bb4eca1f5, type: 3}
-  blockApaPrefab: {fileID: 5548018230906010625, guid: 9846acefa58dc7c4e90762cfb1bddc45, type: 3}
+  blockPrefab: {fileID: 9217388188400669791, guid: cc857f06eb8daef49999d88b90d2856e, type: 3}
+  blockApaPrefab: {fileID: 6129178290866782357, guid: 80e27f18557f81e459302907b68e87f9, type: 3}
   placementDistance: 15
   blockLayer:
     serializedVersion: 2
@@ -850,7 +850,6 @@ MonoBehaviour:
   selectBlock: 0
   canPlacerBlock: 0
   ApaCube: {fileID: 0}
-  isForceCursorVisible: 0
 --- !u!1001 &1017366040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -921,14 +920,17 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1056350500}
+      addedObject: {fileID: 1056350501}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1056350505}
   m_SourcePrefab: {fileID: 100100000, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
 --- !u!1 &1056350499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
   m_PrefabInstance: {fileID: 1017366040}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1056350500
+--- !u!114 &1056350501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,19 +939,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056350499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f778eba0982475a499c9f216f133b029, type: 3}
+  m_Script: {fileID: 11500000, guid: ea61328ed39985342b7b651fc6dc9763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 2
   enemyData: {fileID: 11400000, guid: b8f1fd9213bb41e4b8329430cca08daf, type: 2}
-  MONSTER_STATE: 0
-  MONSTER_TYPE: 2
-  TARGET_OBJECT: 0
   statusEffect: 0
-  curHP: 0
-  curST: 0
-  m_TargetName: 
-  m_TargetPos: {x: 0, y: 0, z: 0}
-  Skill: {fileID: 0}
+  currentHP: 0
+  currentST: 0
+  TARGET_OBJECT: 0
+  targetPos: {x: 0, y: 0, z: 0}
+--- !u!114 &1056350505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056350499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e05aec635c89124dbf247ac6020ad1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Effects: []
 --- !u!1 &1267507412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1555,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
       propertyPath: m_Name
       value: TreeMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
