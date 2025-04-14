@@ -17,22 +17,14 @@ namespace MoonYoHanStudy
         
         }
 
-        bool HideUI = false;
+        bool HideUI = true;
 
         void OnCreafting()
         {
             HideUI = !HideUI;
+            Debug.Log(HideUI);
 
-            if (HideUI)
-            {
-                UIManager.Show<CreaftingUI>(UIList.CreaftingUI);
-            }
-            else if (!HideUI)
-            {
-                UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
-            }
 
-            GameManager.Instance.SetCursorVisible(HideUI);
         }
     }
 }

@@ -31,7 +31,6 @@ namespace MoonYoHanStudy
         public override void Update()
         {
             float distance = Vector3.Distance(monster.transform.position, monster.m_TargetPos);
-
             if (distance < 20f)
             {
                 monster.TransitionToState(new MoveState(monster));
@@ -58,7 +57,6 @@ namespace MoonYoHanStudy
             monster.transform.position -= monster.MovePoint(monster.TARGET_OBJECT) * Time.deltaTime;
 
             float distance = Vector3.Distance(monster.transform.position, monster.m_TargetPos);
-
             if (distance < 1f)
             {
                 monster.TransitionToState(new AttackState(monster));

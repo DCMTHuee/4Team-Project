@@ -1,70 +1,39 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace MoonYoHanStudy
 {
-    public class PlayerController : ObjectStatusBase
+    public class Player_Move : MonoBehaviour
     {
-        [SerializeField] private PlayerType playerType;
-        [SerializeField] private PlayerData playerData; // 플레이어 데이터
-        [SerializeField] private GameObject mainCameraObject; // 메인 카메라
-        [SerializeField] private CharacterController characterController; // 캐릭터 컨트롤러
+        [SerializeField] GameObject mainCameraObject;
 
-        float currentHP; // 현재 체력
-        float currentST; // 현재 스테미너
+        [SerializeField] float moveSpeed = 5f;
+        [SerializeField] float rotationSpeed = 10;
 
-        float moveSpeed; // 이동 스피드
-        [SerializeField] float rotationSpeed = 10; // 카메라 회전력
+        private CharacterController characterController;
 
-        Vector2 direction; // 키의 입력값
-        Vector3 adjustMovement; // 이동해야할 방향
-
-        // bool canAction = true;
-        bool canMove = true;
+        Vector3 adjustMovement;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            Init();
-        }
-
-        void Init()
-        {
-            var data = playerData.GetData(playerType);
-
-            MaxHP = data.MaxHP;
-            currentHP = MaxHP;
-
-            MaxST = data.MaxST;
-            currentST = MaxST;
-
-            moveSpeed = data.Speed;
+            characterController = GetComponent<CharacterController>();
         }
 
         // Update is called once per frame
-        protected override void Update()
+        void Update()
         {
-            base.Update();
 
-            Move();
-        }
 
-        public override void TakeDamage(float amount)
-        {
-            currentHP -= amount;
-            currentST -= amount;
-        }
-
-        #region 인풋값 컨트롤 // 나중에 수정 요망
-
-        void Move()
-        {
-            if (canMove)
+            if (notPuchAltButton)
             {
-                adjustMovement = ((transform.forward * direction.y) + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
-                characterController.Move(adjustMovement);
+                // Rotate(CameraSystem.Singletone.AimingPoint);
             }
         }
+
+        Vector2 direction;
+        private bool canMove = true;
 
         void OnMove(InputValue value)
         {
@@ -119,8 +88,8 @@ namespace MoonYoHanStudy
 
 
 
-            /*            Quaternion targetRotation = Quaternion.Euler(CameraTargetPitch, CameraTargetYaw, 0f);
-                        mainCameraObject.transform.rotation = Quaternion.Slerp(mainCameraObject.transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);*/
+/*            Quaternion targetRotation = Quaternion.Euler(CameraTargetPitch, CameraTargetYaw, 0f);
+            mainCameraObject.transform.rotation = Quaternion.Slerp(mainCameraObject.transform.rotation, targetRotation, rotationSmoothSpeed * Time.deltaTime);*/
         }
 
         public float ClampAngle(float angle, float min, float max)
@@ -128,7 +97,5 @@ namespace MoonYoHanStudy
             angle = Mathf.Repeat(angle + 180f, 360f) - 180f; // -180 ~ 180도로 정규화
             return Mathf.Clamp(angle, min, max);
         }
-
-        #endregion 
     }
 }

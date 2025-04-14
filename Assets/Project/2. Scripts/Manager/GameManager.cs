@@ -12,7 +12,7 @@ namespace MoonYoHanStudy
         [HideInInspector] public PlayerController Player;
         [HideInInspector] public Lightbringer_Stone Lightbringer_Stone;
 
-        public List<EnemyController> enemys = new List<EnemyController>();
+        public List<Enemy_Base> enemys = new List<Enemy_Base>();
 
         private void Awake()
         {
@@ -32,14 +32,6 @@ namespace MoonYoHanStudy
         void Update()
         {
         
-        }
-
-        private bool isForceCursorVisible = false;
-
-        public void SetCursorVisible(bool isVisible)
-        {
-            Cursor.visible = isVisible || isForceCursorVisible;
-            Cursor.lockState = isVisible || isForceCursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
         }
     }
 }
