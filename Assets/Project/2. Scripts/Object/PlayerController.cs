@@ -80,7 +80,7 @@ namespace MoonYoHanStudy
             }
         }
 
-        bool notPuchAltButton = true;
+        // bool notPuchAltButton = true;
 
         public void Rotate(Vector3 targetAimPoint)
         {

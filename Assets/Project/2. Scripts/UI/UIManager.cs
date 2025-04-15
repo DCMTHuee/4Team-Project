@@ -64,13 +64,11 @@ namespace MoonYoHanStudy
             for (int index = (int)UIList.POPUP_START + 1; index < (int)UIList.POPUP_END; index++)
             {
                 popups.Add((UIList)index, null);
-                Debug.Log($"ÆË¾÷Ã¢ÀÇ {index}¹øÂ° ÀÎµ¦½º °ª : {popups[(UIList)index]}");
             }
 
             for (int index = (int)UIList.PANEL_START + 1; index < (int)UIList.PANEL_END; index++)
             {
                 panels.Add((UIList)index, null);
-                Debug.Log($"ÆÇ³ÚÃ¢ÀÇ {index}¹øÂ° ÀÎµ¦½º °ª : {panels[(UIList)index]}");
             }
         }
         

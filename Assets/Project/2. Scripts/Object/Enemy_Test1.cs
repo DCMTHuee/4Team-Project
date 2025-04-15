@@ -75,7 +75,7 @@ namespace MoonYoHanStudy
         }// void MonsterInit(MonsterType monsterType)
 
         // Update is called once per frame
-        void Update()
+        protected override void Update()
         {
             if (m_TargetName != null)
             {

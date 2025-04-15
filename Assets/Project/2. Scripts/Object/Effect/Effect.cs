@@ -5,13 +5,13 @@ namespace MoonYoHanStudy
 {
     public class Effect : MonoBehaviour
     {
-        public List<EffectBase> itemEffects;
+        public List<EffectBase> Effects;
 
         public bool Use(GameObject target)
         {
             bool isUsed = true;
 
-            foreach (EffectBase effect in itemEffects)
+            foreach (EffectBase effect in Effects)
             {
                 isUsed &= effect.ExecuteRole(target);
             }

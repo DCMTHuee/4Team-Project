@@ -11,6 +11,7 @@ namespace MoonYoHanStudy
             var asyncLoadScene = SceneManager.LoadSceneAsync(SceneType.InGame.ToString(), LoadSceneMode.Single);
             yield return new WaitUntil(() => asyncLoadScene.isDone);
 
+            GameManager.Instance.SetCursorVisible(false);
             UIManager.Show<InGameUI>(UIList.InGameUI);
             UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
         }

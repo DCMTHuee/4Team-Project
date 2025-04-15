@@ -21,7 +21,7 @@ namespace MoonYoHanStudy
 
         void Update()
         {
-            SetCursorVisible(isForceCursorVisible);
+            // SetCursorVisible(isForceCursorVisible);
 
             // B키를 눌러면 설치 가능 모드, 불가능 모드 전환
             if (Input.GetKeyDown(KeyCode.B))

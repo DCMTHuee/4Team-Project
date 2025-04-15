@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class CreaftingUI : UIBase
+    public class InventorySlot : MonoBehaviour
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -15,7 +15,5 @@ namespace MoonYoHanStudy
         {
         
         }
-
-
     }
 }

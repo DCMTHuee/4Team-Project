@@ -937,19 +937,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1056350499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f778eba0982475a499c9f216f133b029, type: 3}
+  m_Script: {fileID: 11500000, guid: ea61328ed39985342b7b651fc6dc9763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 2
   enemyData: {fileID: 11400000, guid: b8f1fd9213bb41e4b8329430cca08daf, type: 2}
-  MONSTER_STATE: 0
-  MONSTER_TYPE: 2
+  currentHP: 0
+  currentST: 0
   TARGET_OBJECT: 0
-  statusEffect: 0
-  curHP: 0
-  curST: 0
-  m_TargetName: 
-  m_TargetPos: {x: 0, y: 0, z: 0}
-  Skill: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1267507412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1539,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
       propertyPath: m_Name
       value: TreeMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d3dd933deb59ab04292421df9e662ed8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

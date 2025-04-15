@@ -2,8 +2,11 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class CreaftingUI : UIBase
+    public class CreaftingSlot : Slot
     {
+        [SerializeField] GameObject BlockOrigin;
+        [SerializeField] GameObject BlockApa;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -15,7 +18,5 @@ namespace MoonYoHanStudy
         {
         
         }
-
-
     }
 }
