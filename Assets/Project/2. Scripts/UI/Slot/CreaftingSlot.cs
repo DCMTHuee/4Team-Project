@@ -4,8 +4,8 @@ namespace MoonYoHanStudy
 {
     public class CreaftingSlot : Slot
     {
-        [SerializeField] GameObject BlockOrigin;
-        [SerializeField] GameObject BlockApa;
+        public GameObject BlockOrigin;
+        public GameObject BlockApa;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

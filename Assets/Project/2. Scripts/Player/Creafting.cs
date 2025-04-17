@@ -114,13 +114,5 @@ namespace MoonYoHanStudy
                 Mathf.Round(position.z)
             );
         }
-
-        public bool isForceCursorVisible = false;
-
-        public void SetCursorVisible(bool isVisible)
-        {
-            Cursor.visible = isVisible || isForceCursorVisible;
-            Cursor.lockState = isVisible || isForceCursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
-        }
     }
 }
