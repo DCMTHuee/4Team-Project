@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class UIManager : SingletoneBase<UIManager>
+    public class UIManager : SingletoneBase<UIManager, DontDestroyOnLoadOn>
     {
         public static T Show<T>(UIList uiPrefabName, System.Action onShowCallback = null) where T : UIBase
         {
@@ -71,7 +72,7 @@ namespace MoonYoHanStudy
                 panels.Add((UIList)index, null);
             }
         }
-        
+
         public bool GetUI<T>(UIList uiPrefabName, out T ui, bool reload = false) where T : UIBase
         {
             ui = GetUI<T>(uiPrefabName, reload);
@@ -115,6 +116,11 @@ namespace MoonYoHanStudy
             }
 
             return (T)container[uiPrefabName];
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            return ToString();
         }
     }
 }

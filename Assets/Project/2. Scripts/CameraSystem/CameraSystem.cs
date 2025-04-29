@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 
 namespace MoonYoHanStudy
 {
-    public class CameraSystem : SingletoneBase<CameraSystem>
+    public class CameraSystem : SingletoneBase<CameraSystem, DontDestroyOnLoadOn>
     {
         [field: SerializeField] public Camera MainCamera { get; private set; }
         [field: SerializeField] public CinemachineCamera CameraTPS { get; private set; }

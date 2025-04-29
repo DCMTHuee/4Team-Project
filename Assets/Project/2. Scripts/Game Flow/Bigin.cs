@@ -16,7 +16,7 @@ namespace MoonYoHanStudy
         // 도심지 스테이지
     }
 
-    public class Bigin : SingletoneBase<Bigin>
+    public class Bigin : SingletoneBase<Bigin, DontDestroyOnLoadOn>
     {
         private void Start()
         {
