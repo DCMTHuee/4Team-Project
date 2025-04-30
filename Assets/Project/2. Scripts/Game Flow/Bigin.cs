@@ -18,6 +18,8 @@ namespace MoonYoHanStudy
 
     public class Bigin : SingletoneBase<Bigin, DontDestroyOnLoadOn>
     {
+        public bool isStart = false;
+
         private void Start()
         {
             Initialized();
@@ -70,8 +72,10 @@ namespace MoonYoHanStudy
 
             UIManager.Show<LoadingUI>(UIList.LoadingUI);
 
+            // 게임이 최초로 실행된건지 판단하는 여부
+            Singletone.isStart = true;
 
-            if(currentSceneController != null)
+            if (currentSceneController != null)
             {
                 yield return StartCoroutine(currentSceneController.OnEnd());
                 Destroy(currentSceneController.gameObject);
