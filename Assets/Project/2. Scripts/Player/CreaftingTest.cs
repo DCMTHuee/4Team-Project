@@ -23,7 +23,7 @@ namespace MoonYoHanStudy
 
         public GameObject ApaCube; // 어떤 걸 골랐는지 확인하기 위한 오브젝트
 
-        int rotateVelue = 0; // 블럭 회전하기 위한 변수값
+        // int rotateVelue = 0; // 블럭 회전하기 위한 변수값
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

@@ -24,7 +24,7 @@ namespace MoonYoHanStudy
         public void HideUI()
         {
             UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
-            GameManager.Instance.SetCursorVisible(false);
+            GameManager.Singletone.SetCursorVisible(false);
         }
     }
 }

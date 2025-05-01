@@ -55,6 +55,17 @@ namespace MoonYoHanStudy
             currentST -= amount;
         }
 
+        public float GetCurrnetHP()
+        {
+            return currentHP;
+        }
+
+        public float GetCurrnetST()
+        {
+            return currentST;
+        }
+
+
         #region 인풋값 컨트롤 // 나중에 수정 요망
 
         void Move()

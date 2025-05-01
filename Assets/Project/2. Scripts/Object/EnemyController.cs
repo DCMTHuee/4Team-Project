@@ -37,8 +37,8 @@ namespace MoonYoHanStudy
 
         void Init()
         {
-            playerPosition = GameManager.Instance.Player.transform;
-            lightbringer_Stone = GameManager.Instance.Lightbringer_Stone.transform;
+            playerPosition = GameManager.Singletone.Player.transform;
+            lightbringer_Stone = GameManager.Singletone.Lightbringer_Stone.transform;
 
             var data = enemyData.GetData(monsterType);
 

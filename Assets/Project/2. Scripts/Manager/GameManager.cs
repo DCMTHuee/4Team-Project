@@ -5,19 +5,16 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : SingletoneBase<GameManager, DontDestroyOnLoadOff>
     {
-        public static GameManager Instance;
 
         [HideInInspector] public PlayerController Player;
         [HideInInspector] public Lightbringer_Stone Lightbringer_Stone;
 
         public List<EnemyController> enemys = new List<EnemyController>();
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = this;
-
             Player = FindAnyObjectByType<PlayerController>();
             Lightbringer_Stone = FindAnyObjectByType<Lightbringer_Stone>();
         }

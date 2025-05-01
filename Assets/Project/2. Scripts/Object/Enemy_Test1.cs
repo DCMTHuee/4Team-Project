@@ -33,8 +33,8 @@ namespace MoonYoHanStudy
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            playerPosition = GameManager.Instance.Player.transform;
-            lightbringer_Stone = GameManager.Instance.Lightbringer_Stone.transform;
+            playerPosition = GameManager.Singletone.Player.transform;
+            lightbringer_Stone = GameManager.Singletone.Lightbringer_Stone.transform;
 
             MonsterInit(MONSTER_TYPE);
             StartCoroutine(TargetUpdate());
