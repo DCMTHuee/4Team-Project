@@ -18,7 +18,8 @@ namespace MoonYoHanStudy
 
         public override IEnumerator OnEnd()
         {
-            UIManager.Hide<InGameUI>(UIList.TitleUI);
+            GameManager.Singletone.SetCursorVisible(true);
+            UIManager.Hide<InGameUI>(UIList.InGameUI);
 
             yield return null;
         }

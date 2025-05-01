@@ -16,8 +16,7 @@ namespace MoonYoHanStudy
         float moveSpeed; // 이동 스피드
         [SerializeField] float rotationSpeed = 10; // 카메라 회전력
 
-        Vector2 direction; // 키의 입력값
-        Vector3 adjustMovement; // 이동해야할 방향
+        // Vector3 adjustMovement; // 이동해야할 방향
 
         // bool canAction = true;
         bool canMove = true;
@@ -46,7 +45,27 @@ namespace MoonYoHanStudy
         {
             base.Update();
 
-            Move();
+            Debug.Log(InputManager.Singletone.MoveDirection);
+            Debug.Log(InputManager.Singletone.MouseMoveDirection);
+
+            if (InputManager.Singletone.MoveDirection == Vector2.zero)
+            {
+                canMove = false;
+                // Debug.Log("canMove 거짓");
+            }
+            else if (InputManager.Singletone.MoveDirection != Vector2.zero)
+            {
+                canMove = true;
+                // Debug.Log("canMove 참");
+            }
+
+            if (canMove)
+            {
+                Vector3 adjustMovement = ((transform.forward * InputManager.Singletone.MoveDirection.y) + (transform.right * InputManager.Singletone.MoveDirection.x)).normalized * moveSpeed * Time.deltaTime;
+                characterController.Move(adjustMovement);
+            }
+
+            Rotate();
         }
 
         public override void TakeDamage(float amount)
@@ -65,31 +84,7 @@ namespace MoonYoHanStudy
             return currentST;
         }
 
-
         #region 인풋값 컨트롤 // 나중에 수정 요망
-
-        void Move()
-        {
-            if (canMove)
-            {
-                adjustMovement = ((transform.forward * direction.y) + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
-                characterController.Move(adjustMovement);
-            }
-        }
-
-        void OnMove(InputValue value)
-        {
-            direction = value.Get<Vector2>();
-
-            if (direction == Vector2.zero)
-            {
-                canMove = false;
-            }
-            else if (direction != Vector2.zero)
-            {
-                canMove = true;
-            }
-        }
 
         // bool notPuchAltButton = true;
 
@@ -112,12 +107,10 @@ namespace MoonYoHanStudy
 
         // private float rotationSmoothSpeed = 10;
 
-        void OnMouse(InputValue value)
+        void Rotate()
         {
-            Vector2 direction = value.Get<Vector2>();
-
-            float yaw = direction.x * rotationSpeed * CameraSensitivityX;
-            float pitch = direction.y * rotationSpeed * CameraSensitivityY;
+            float yaw = InputManager.Singletone.MouseMoveDirection.x * rotationSpeed * CameraSensitivityX;
+            float pitch = InputManager.Singletone.MouseMoveDirection.y * rotationSpeed * CameraSensitivityY;
 
             CameraTargetYaw += yaw * Time.deltaTime;
             CameraTargetPitch -= pitch * Time.deltaTime;

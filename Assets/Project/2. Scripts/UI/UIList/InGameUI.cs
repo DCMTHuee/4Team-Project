@@ -12,6 +12,7 @@ namespace MoonYoHanStudy
         public RectTransform HP_bar;
         public RectTransform ST_bar;
 
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -21,22 +22,15 @@ namespace MoonYoHanStudy
         // Update is called once per frame
         void Update()
         {
-            if (playerController.GetCurrnetHP() != playerController.MaxHP)
-            {
-                HP();
-            }
+                
         }
 
-        float currentHP;
-        float currentST;
-
-        void HP()
+        public void HP()
         {
             HP_bar.localScale = new Vector3(playerController.GetCurrnetHP() / playerController.MaxHP, 1, 1);
-            currentHP = playerController.GetCurrnetHP();
             ST_bar.localScale = new Vector3(playerController.GetCurrnetST() / playerController.MaxST, 1, 1);
-            currentHP = playerController.GetCurrnetST();
         }
+
 
         float Compass_Material_Offset = 0;
 
@@ -51,6 +45,7 @@ namespace MoonYoHanStudy
                 Compass_Material_Offset = 0;
             }
         }
+
 
         bool HideUI = true;
 
@@ -68,6 +63,11 @@ namespace MoonYoHanStudy
             {
                 UIManager.Show<CreaftingUI>(UIList.CreaftingUI);
             }
+        }
+
+        public void Esc()
+        {
+            Bigin.Singletone.ChangeScene(SceneType.Title);
         }
     }
 }
