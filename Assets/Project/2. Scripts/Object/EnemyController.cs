@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace MoonYoHanStudy
 {
@@ -8,7 +9,8 @@ namespace MoonYoHanStudy
         [SerializeField] private MonsterType monsterType;
         [SerializeField] private EnemyData enemyData; // 몬스터 데이터
 
-        private Enemy_StateBase currentState; // 현재 행동 상태
+        [SerializeField] RectTransform HP_bar;
+
         // private StatusEffect statusEffect = StatusEffect.None; // 상태이상의 상태
 
 
@@ -42,6 +44,8 @@ namespace MoonYoHanStudy
 
             var data = enemyData.GetData(monsterType);
 
+            AttackPoint = data.AttackPoint;
+
             MaxHP = data.MaxHP;
             currentHP = MaxHP;
 
@@ -51,16 +55,16 @@ namespace MoonYoHanStudy
             moveSpeed = data.Speed;
         }
 
-        public void TransitionToState(Enemy_StateBase newState)
-        {
-            currentState?.Exit();
-            currentState = newState;
-            currentState?.Enter();
-        }
-
         public override void TakeDamage(float amount)
         {
-            throw new System.NotImplementedException();
+            currentHP -= amount;
+            currentHP = Mathf.Clamp(currentHP, 0, MaxHP);
+            HP();
+        }
+
+        public void HP()
+        {
+            HP_bar.localScale = Vector3.right * (currentHP / MaxHP) + Vector3.up;
         }
 
         // Update is called once per frame
@@ -69,6 +73,10 @@ namespace MoonYoHanStudy
             if (canMove) // 조건 손 볼 것
             {
                 base.Update();
+
+                currentState?.InvokeOnUpdate();
+
+                // TransitionToState(new IdleState(this));
             }
         }
 

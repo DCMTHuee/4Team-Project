@@ -8,6 +8,7 @@ namespace MoonYoHanStudy
     public struct EnemyDataBase
     {
         public MonsterType type;
+        public float AttackPoint;
         public float MaxHP;
         public float MaxST;
         public float Speed;

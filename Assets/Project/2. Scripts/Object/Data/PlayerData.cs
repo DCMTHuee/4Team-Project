@@ -7,6 +7,7 @@ namespace MoonYoHanStudy
     public struct PlayerDataBase
     {
         public PlayerType type;
+        public float AttackPoint;
         public float MaxHP;
         public float MaxST;
         public float Speed;

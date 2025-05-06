@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace MoonYoHanStudy
@@ -79,7 +80,7 @@ namespace MoonYoHanStudy
         {
             if (m_TargetName != null)
             {
-                currentState?.Update();
+                currentState.InvokeOnUpdate();
             }
         }// void Update()
 
@@ -123,15 +124,6 @@ namespace MoonYoHanStudy
             return vector3;
         }
 
-        private Enemy_StateBase currentState;
-
-        public void TransitionToState(Enemy_StateBase newState)
-        {
-            currentState?.Exit();
-            currentState = newState;
-            currentState?.Enter();
-        }
-
         IEnumerator TargetUpdate()
         {
             yield return new WaitForSeconds(15);
@@ -156,6 +148,31 @@ namespace MoonYoHanStudy
 
             goto TU;
         }// IEnumerator TargetUpdate()
+
+        void Idle()
+        {
+/*            float distance = Vector3.Distance(Object.transform.position, Object.m_TargetPos);
+
+            if (distance < 20f)
+            {
+                Object.TransitionToState(new MoveState(Object));
+            }*/
+        }
+
+       void Move()
+        {
+/*           transform.position -= TARGET_OBJECT.x * Time.deltaTime;
+
+            float distance = Vector3.Distance(monster.transform.position, monster.m_TargetPos);
+            if (distance < 1f)
+            {
+                monster.TransitionToState(new AttackState(monster));
+            }
+            else if (distance > 20f)
+            {
+                monster.TransitionToState(new IdleState(monster));
+            }*/
+        }
 
         public override void TakeDamage(float Damage)
         {

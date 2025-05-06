@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player_LIST:
   - type: 2
+    AttackPoint: 1000
     MaxHP: 1000
     MaxST: 1000
     Speed: 5

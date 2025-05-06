@@ -3,10 +3,13 @@ using UnityEngine;
 
 namespace MoonYoHanStudy
 {
-    public abstract class ObjectStatusBase : MonoBehaviour
+    public class ObjectStatusBase : MonoBehaviour
     {
+
+
         internal StatusEffect currentSE = StatusEffect.None;
 
+        internal float AttackPoint;
         internal float MaxHP;
         internal float MaxST;
         internal float MoveSpeed;
@@ -14,11 +17,17 @@ namespace MoonYoHanStudy
         protected Dictionary<StatusEffect, float> statusTimers = new();
         protected GameObject statusUI;
 
+        protected StateBase<ObjectStatusBase> currentState; // 현재 행동 상태를 관리하는 변수
+
+        protected Animator ANIMATOR;
+
         protected virtual void Update()
         {
             UpdateStatusEffects();
         }
 
+
+        // 상대이상을 해제하는 함수
         protected void UpdateStatusEffects()
         {
             List<StatusEffect> expired = new();
@@ -38,6 +47,7 @@ namespace MoonYoHanStudy
             }
         }
 
+        // 오브젝트에 상태이상을 넣는 함수
         public virtual void ApplyStatusEffect(StatusEffect effect, float duration)
         {
             currentSE |= effect;
@@ -55,6 +65,21 @@ namespace MoonYoHanStudy
             StatusIconManager.Instance.RemoveIcon(statusUI, effect);
         }
 
-        public abstract void TakeDamage(float amount);
+        // 행동 상태는 변경하는 함수
+        public void TransitionToState(StateBase<ObjectStatusBase> newState)
+        {
+            currentState?.InvokeOnExit();
+            currentState = newState;
+            currentState?.InvokeOnEnter();
+        }
+
+        private void HI()
+        {
+        }
+
+        public virtual void TakeDamage(float amount)
+        {
+
+        }
     }
 }
