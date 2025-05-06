@@ -32,7 +32,6 @@ namespace MoonYoHanStudy
             {
                 if (!alreadyHit.Contains(other.gameObject))
                 {
-                    Debug.Log("타격 성공");
                     alreadyHit.Add(other.gameObject); // 추가됨으써 더 이상 공격이 들어오지 않음.
                     other.gameObject.GetComponent<EnemyController>().TakeDamage(playerController.AttackPoint);
                 }

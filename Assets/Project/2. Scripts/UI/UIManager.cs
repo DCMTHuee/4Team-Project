@@ -18,6 +18,12 @@ namespace MoonYoHanStudy
 
             newUI.Show(onShowCallback);
 
+            if (activePopupsUI.ContainsKey(uiPrefabName))
+            {
+                activePopupsUI[uiPrefabName] = true;
+            }
+
+
             return newUI;
         }
 
@@ -32,6 +38,11 @@ namespace MoonYoHanStudy
 
             targetUI.Hide(onHideCallback);
 
+            if (activePopupsUI.ContainsKey(uiPrefabName))
+            {
+                activePopupsUI[uiPrefabName] = false;
+            }
+
             return targetUI;
         }
 
@@ -40,7 +51,7 @@ namespace MoonYoHanStudy
 
         private Dictionary<UIList, UIBase> popups = new Dictionary<UIList, UIBase>();
         private Dictionary<UIList, UIBase> panels = new Dictionary<UIList, UIBase>();
-
+        public static Dictionary<UIList, bool> activePopupsUI = new Dictionary<UIList, bool>();
 
         private const string UI_PREFAB_PATH = "Prefab/UI/";
 
@@ -65,6 +76,7 @@ namespace MoonYoHanStudy
             for (int index = (int)UIList.POPUP_START + 1; index < (int)UIList.POPUP_END; index++)
             {
                 popups.Add((UIList)index, null);
+                activePopupsUI.Add((UIList)index, false);
             }
 
             for (int index = (int)UIList.PANEL_START + 1; index < (int)UIList.PANEL_END; index++)

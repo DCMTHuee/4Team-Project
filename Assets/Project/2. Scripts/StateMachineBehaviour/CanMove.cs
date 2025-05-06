@@ -8,7 +8,7 @@ namespace MoonYoHanStudy
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            animator.gameObject.GetComponent<PlayerController>().SetCanMoveSwitch(true);
+            animator.gameObject.GetComponent<PlayerController>().SetActionSwitch(true, true, true);
         }
     }
 }

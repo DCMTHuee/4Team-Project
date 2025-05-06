@@ -1,11 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MoonYoHanStudy
 {
+    // , float AttackDamageValue, float PersentValue
     public abstract class EffectBase : ScriptableObject
     {
-        public abstract bool ExecuteRole(GameObject target);
+        public abstract bool ExecuteRole(GameObject target, float AttackDamageValue, float PersentValue);
     }
 
     [CreateAssetMenu(fileName = "StunEffect", menuName = "Scriptable Objects/Effects/StunEffect")]
@@ -13,12 +15,14 @@ namespace MoonYoHanStudy
     {
         public float duration = 2f;
 
-        public override bool ExecuteRole(GameObject target)
+        public override bool ExecuteRole(GameObject target, float AttackDamageValue, float PersentValue)
         {
-            var enemy = target.GetComponent<Enemy_Test1>();
-            if (enemy != null)
+            Debug.Log("Ω∫≈œ");
+            
+            var targetData = target.GetComponent<ObjectStatusBase>();
+            if (targetData != null)
             {
-                enemy.ApplyStatusEffect(StatusEffect.Stunned, duration);
+                targetData.ApplyStatusEffect(StatusEffect.Stunned, duration);
                 return true;
             }
             return false;
@@ -32,24 +36,24 @@ namespace MoonYoHanStudy
         public float damagePerTick = 10f;
         public float duration = 3f;
 
-        public override bool ExecuteRole(GameObject target)
+        public override bool ExecuteRole(GameObject target, float AttackDamageValue, float PersentValue)
         {
-            var enemy = target.GetComponent<Enemy_Test1>();
-            if (enemy != null)
+            var targetData = target.GetComponent<ObjectStatusBase>();
+            if (targetData != null)
             {
-                enemy.ApplyStatusEffect(StatusEffect.Bleed, duration);
-                enemy.StartCoroutine(ApplyBleed(enemy));
+                targetData.ApplyStatusEffect(StatusEffect.Bleed, duration);
+                targetData.StartCoroutine(ApplyBleed(targetData));
                 return true;
             }
             return false;
         }
 
-        IEnumerator ApplyBleed(Enemy_Test1 enemy)
+        IEnumerator ApplyBleed(ObjectStatusBase target)
         {
             float timer = duration;
             while (timer > 0)
             {
-                enemy.TakeDamage(damagePerTick);
+                target.TakeDamage(damagePerTick);
                 timer -= tickInterval;
                 yield return new WaitForSeconds(tickInterval);
             }

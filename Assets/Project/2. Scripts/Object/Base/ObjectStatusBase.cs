@@ -5,8 +5,6 @@ namespace MoonYoHanStudy
 {
     public class ObjectStatusBase : MonoBehaviour
     {
-
-
         internal StatusEffect currentSE = StatusEffect.None;
 
         internal float AttackPoint;
@@ -14,12 +12,24 @@ namespace MoonYoHanStudy
         internal float MaxST;
         internal float MoveSpeed;
 
+        internal bool CanAttack = true;
+        internal bool CanMove= true;
+        internal bool CanRotate = true;
+
         protected Dictionary<StatusEffect, float> statusTimers = new();
         protected GameObject statusUI;
 
-        protected StateBase<ObjectStatusBase> currentState; // 현재 행동 상태를 관리하는 변수
+        protected IdleState IdleState;
+        protected MoveState MoveState;
+        protected AttackState AttackState;
+        protected HitState HitState;
+        protected StateBase<ObjectStatusBase> CurrentState; // 현재 행동 상태를 관리하는 변수
+
+        protected CharacterController CharacterController; // 캐릭터 컨트롤러
 
         protected Animator ANIMATOR;
+
+
 
         protected virtual void Update()
         {
@@ -68,18 +78,17 @@ namespace MoonYoHanStudy
         // 행동 상태는 변경하는 함수
         public void TransitionToState(StateBase<ObjectStatusBase> newState)
         {
-            currentState?.InvokeOnExit();
-            currentState = newState;
-            currentState?.InvokeOnEnter();
-        }
-
-        private void HI()
-        {
+            if (CurrentState != newState)
+            {
+                CurrentState?.InvokeOnExit();
+                CurrentState = newState;
+                CurrentState?.InvokeOnEnter();
+            }
         }
 
         public virtual void TakeDamage(float amount)
         {
-
+            Debug.Log($"부모껄 재생한다.");
         }
     }
 }

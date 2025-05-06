@@ -5,6 +5,14 @@ namespace MoonYoHanStudy
 {
     public class CreaftingUI : UIBase
     {
+        public PlayerController playerController;
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            playerController = GameManager.Singletone.Player;
+        }
+
         public void CreaftingButton()
         {
             // 해당 게임 오브젝트가 가지고있는 CreaftingSlot 스크립트를 가져온다.
@@ -25,6 +33,8 @@ namespace MoonYoHanStudy
         {
             UIManager.Hide<CreaftingUI>(UIList.CreaftingUI);
             GameManager.Singletone.SetCursorVisible(false);
+
+            playerController.SetActionSwitch(true, true, true);
         }
     }
 }

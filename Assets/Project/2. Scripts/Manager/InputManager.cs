@@ -38,7 +38,6 @@ namespace MoonYoHanStudy
         void OnT_Button()
         {
             On_T_Key_Pressed?.Invoke();
-            GameManager.Singletone.SetCursorVisible(true);
             Debug.Log("T 버튼 누름");
         }
     }

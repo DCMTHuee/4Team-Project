@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MONSTER_LIST:
   - type: 1
-    AttackPoint: 100
+    AttackPoint: 50
     MaxHP: 1000
     MaxST: 1000
-    Speed: 10
+    Speed: 3
     skillPrefab: []
   - type: 2
-    AttackPoint: 1000
+    AttackPoint: 100
     MaxHP: 10000
     MaxST: 10000
-    Speed: 10
-    skillPrefab: []
+    Speed: 3
+    skillPrefab:
+    - {fileID: 0}

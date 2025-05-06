@@ -80,7 +80,7 @@ namespace MoonYoHanStudy
         {
             if (m_TargetName != null)
             {
-                currentState.InvokeOnUpdate();
+                CurrentState.InvokeOnUpdate();
             }
         }// void Update()
 

@@ -17,7 +17,7 @@ namespace MoonYoHanStudy
 
             hitbox.CanDamage(true);
 
-            animator.gameObject.GetComponent<PlayerController>().SetCanMoveSwitch(false);
+            animator.gameObject.GetComponent<PlayerController>().SetActionSwitch(false, true, true);
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -9,18 +9,14 @@ namespace MoonYoHanStudy
         [SerializeField] private PlayerType playerType;
         [SerializeField] private PlayerData playerData; // 플레이어 데이터
         [SerializeField] private GameObject CameraPivot; // 메인 카메라
-        [SerializeField] private CharacterController characterController; // 캐릭터 컨트롤러
 
-        [SerializeField] private GameObject playerController;
+        [SerializeField] private Skill skill;
 
-        float currentHP; // 현재 체력
-        float currentST; // 현재 스테미너
+        [SerializeField] float currentHP; // 현재 체력
+        public RectTransform HP_bar;
+        [SerializeField] float currentST; // 현재 스테미너
 
-        float moveSpeed; // 이동 스피드
         [SerializeField] float rotationSpeed = 10; // 카메라 회전력
-
-        bool canMove = true;
-        bool canRotate = true;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -40,9 +36,11 @@ namespace MoonYoHanStudy
             MaxST = data.MaxST;
             currentST = MaxST;
 
-            moveSpeed = data.Speed;
+            MoveSpeed = data.Speed;
 
             ANIMATOR = GetComponent<Animator>();
+
+            CharacterController = GetComponent<CharacterController>();
 
             InputManager.Singletone.MouseLeftPressed += Attack;
         }
@@ -56,7 +54,7 @@ namespace MoonYoHanStudy
 
             Rotate();
 
-            currentState?.InvokeOnUpdate();
+            CurrentState?.InvokeOnUpdate();
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -72,7 +70,6 @@ namespace MoonYoHanStudy
         public override void TakeDamage(float amount)
         {
             currentHP -= amount;
-            currentST -= amount;
         }
 
         public float GetCurrnetHP()
@@ -85,24 +82,21 @@ namespace MoonYoHanStudy
             return currentST;
         }
 
-        public void SetCanMoveSwitch(bool true_false)
+        public void SetActionSwitch(bool canMove, bool canRotate, bool canAttack)
         {
-            canMove = true_false;
-        }
-
-        public void SetCanRotateSwitch(bool true_false)
-        {
-            canRotate = true_false;
+            CanMove = canMove;
+            CanRotate = canRotate;
+            CanAttack = canAttack;
         }
 
         public void SetCanMoveChange()
         {
-            canMove = !canMove;
+            CanMove = !CanMove;
         }
 
         public void SetCanRotateChange()
         {
-            canRotate = !canRotate;
+            CanRotate = !CanRotate;
         }
         #endregion
 
@@ -118,8 +112,11 @@ namespace MoonYoHanStudy
 
         void Attack()
         {
-            ANIMATOR.SetTrigger("Attack");
-            AttackCount = 0;
+            if (CanAttack)
+            {
+                ANIMATOR.SetTrigger("Attack");
+                AttackCount = 0;
+            }
         }
 
         private float horizontalBlend = 0f;
@@ -127,7 +124,7 @@ namespace MoonYoHanStudy
 
         private void PositionMove()
         {
-            if (canMove)
+            if (CanMove)
             {
                 ANIMATOR.SetFloat("Magnitude", InputManager.Singletone.MoveDirection.magnitude);
 
@@ -137,8 +134,8 @@ namespace MoonYoHanStudy
                 ANIMATOR.SetFloat("Horizontal", horizontalBlend);
                 ANIMATOR.SetFloat("Vertical", verticalBlend);
 
-                Vector3 adjustMovement = ((transform.forward * InputManager.Singletone.MoveDirection.y) + (transform.right * InputManager.Singletone.MoveDirection.x)).normalized * moveSpeed * Time.deltaTime;
-                characterController.Move(adjustMovement);
+                Vector3 adjustMovement = ((transform.forward * InputManager.Singletone.MoveDirection.y) + (transform.right * InputManager.Singletone.MoveDirection.x)).normalized * MoveSpeed * Time.deltaTime;
+                CharacterController.Move(adjustMovement);
             }
         }
 
@@ -151,7 +148,7 @@ namespace MoonYoHanStudy
 
         void Rotate()
         {
-            if (canRotate)
+            if (CanRotate)
             {
                 float yaw = InputManager.Singletone.MouseMoveDirection.x * rotationSpeed * CameraSensitivityX;
                 float pitch = InputManager.Singletone.MouseMoveDirection.y * rotationSpeed * CameraSensitivityY;
